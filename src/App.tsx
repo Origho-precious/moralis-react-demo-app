@@ -9,6 +9,8 @@ const App = () => {
 		useMoralis();
 	const [showModal, setShowModal] = useState(false);
 
+	console.log(user);
+
 	return (
 		<StyledDiv className="font-sans">
 			<section>
@@ -30,17 +32,29 @@ const App = () => {
 				)}
 			</section>
 
-			<h2>React-Moralis Demo App</h2>
-			<ul>
-				<li>
-					<h4>User Details</h4>
+			<h2 className="text-xl tracking-wider mb-12">React-Moralis Demo App</h2>
+			{isAuthenticated ? (
+				<div>
+					<h3 className="text-lg font-bold mb-2">User Details</h3>
 					<ul>
-						<li>
-							Wallet Address: {user?.attributes?.authData?.moralisEth?.id}
-						</li>
+						{user?.attributes?.authData?.moralisEth ? (
+							<>
+								<li>
+									Wallet Address: {user?.attributes?.authData?.moralisEth?.id}
+								</li>
+								<li>Username: {user?.attributes?.username}</li>
+							</>
+						) : (
+							<>
+								<li>Email Address: {user?.attributes?.email}</li>
+								<li>Username: {user?.attributes?.username}</li>
+							</>
+						)}
 					</ul>
-				</li>
-			</ul>
+				</div>
+			) : (
+				<p className="text-center">Login to see your details</p>
+			)}
 
 			<Modal showModal={showModal} onModalClose={() => setShowModal(false)}>
 				<Form onModalClose={() => setShowModal(false)} />
