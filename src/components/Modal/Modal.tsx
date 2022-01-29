@@ -62,7 +62,7 @@ const Wrapper = styled.div`
 		z-index: 15000;
 		left: 50%;
 		top: 50%;
-		padding: 2rem 0 3rem;
+		padding: 2rem 0;
 		height: max-content;
 		width: 500px;
 		overflow: hidden !important;
