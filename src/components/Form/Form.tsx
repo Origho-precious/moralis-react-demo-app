@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 
 interface FormProps {
@@ -6,7 +6,7 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = ({ onModalClose }) => {
-	const { isAuthenticating, signup, login, authError, hasAuthError } =
+	const { isAuthenticating,isAuthenticated, signup, login, authError, hasAuthError } =
 		useMoralis();
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
@@ -24,15 +24,17 @@ const Form: React.FC<FormProps> = ({ onModalClose }) => {
 
 			if (type === "signup") {
 				signup(username, password, email);
-				return !hasAuthError && onModalClose();
 			}
 
 			login(username, password);
-			return !hasAuthError && onModalClose();
 		} catch (error) {
 			console.log(error);
 		}
 	};
+
+	useEffect(() => {
+		 isAuthenticated && onModalClose()
+	}, [isAuthenticated, onModalClose]);
 
 	const disableBtn = () => {
 		if (type === "signup") {
